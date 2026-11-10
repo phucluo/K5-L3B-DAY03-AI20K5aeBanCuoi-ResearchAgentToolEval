@@ -95,6 +95,7 @@ def run_model_tool_loop(
         round_record: dict[str, Any] = {
             "round": round_index,
             "assistant_text": response.text,
+            "reasoning": getattr(response, "reasoning", None),
             "tool_calls": [{"name": call.name, "args": call.args} for call in calls],
             "tool_results": [],
         }
@@ -106,6 +107,7 @@ def run_model_tool_loop(
                 "assistant_text": response.text or "",
                 "rounds": rounds,
                 "tool_events": all_tool_events,
+                "reasoning_steps": [r["reasoning"] for r in rounds if r.get("reasoning")],
             }
 
         working_messages.append(assistant_tool_message(response.text, calls))
@@ -128,6 +130,7 @@ def run_model_tool_loop(
                     "assistant_text": question,
                     "rounds": rounds,
                     "tool_events": all_tool_events,
+                    "reasoning_steps": [r["reasoning"] for r in rounds if r.get("reasoning")],
                 }
 
             non_clarification_events.append(event)
@@ -140,6 +143,7 @@ def run_model_tool_loop(
         "assistant_text": f"Stopped after {max_tool_rounds} tool rounds. Inspect the transcript for details.",
         "rounds": rounds,
         "tool_events": all_tool_events,
+        "reasoning_steps": [r["reasoning"] for r in rounds if r.get("reasoning")],
     }
 
 

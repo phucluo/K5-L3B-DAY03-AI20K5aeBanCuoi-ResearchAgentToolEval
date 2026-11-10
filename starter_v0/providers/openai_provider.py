@@ -54,6 +54,7 @@ class OpenAIProvider:
 
         resp = client.chat.completions.create(**kwargs)
         msg = resp.choices[0].message
+        reasoning = getattr(msg, "reasoning", None) or getattr(msg, "reasoning_content", None)
         calls: list[ToolCall] = []
         for call in msg.tool_calls or []:
             raw_args = call.function.arguments or "{}"
@@ -66,4 +67,4 @@ class OpenAIProvider:
             if not isinstance(args, dict):
                 args = {"_invalid_json_arguments": raw_args}
             calls.append(ToolCall(name=call.function.name, args=args))
-        return ModelResponse(text=msg.content, tool_calls=calls, raw=resp)
+        return ModelResponse(text=msg.content, tool_calls=calls, raw=resp, reasoning=reasoning)

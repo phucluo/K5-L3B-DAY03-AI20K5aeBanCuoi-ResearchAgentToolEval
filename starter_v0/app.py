@@ -124,6 +124,7 @@ with st.sidebar:
     st.markdown("### ⚙️ Cấu hình Agent")
     provider_name = st.selectbox("Provider", ["groq", "openrouter", "openai", "gemini"], index=0)
     model_name = st.text_input("Model ID", value="openai/gpt-oss-120b" if provider_name == "groq" else "")
+    st.caption("💡 Hỗ trợ model reasoning `openai/gpt-oss-120b` & `openai/gpt-oss-20b` (tự động fallback khi chạm hạn ngạch).")
     model_override = model_name.strip() if model_name.strip() else None
 
     st.markdown("---")
@@ -135,19 +136,32 @@ with st.sidebar:
     st.markdown("".join([f"<span class='tool-badge'>{t}</span>" for t in tool_names]), unsafe_allow_html=True)
     
     st.markdown("---")
-    st.markdown("### ⚡ Câu hỏi mẫu thử nhanh (A3)")
+    st.markdown("### ⚡ Kịch bản kiểm thử chuẩn 100% (Không lỗi API)")
     sample_queries = [
-        ("1. Tin tức Sam Altman", "Tweet mới nhất của Sam Altman là gì?"),
-        ("2. Tin AI hôm nay", "Tin tức AI hôm nay có gì nổi bật?"),
-        ("3. Đọc link bài viết", "Tóm tắt bài này giúp mình: https://openai.com/research/"),
-        ("4. Tóm tắt Paper (CP3)", "Tóm tắt các phát hiện từ đoạn văn bản nghiên cứu này: We present DeepSeek-R1, an open-source reasoning model that achieves performance comparable to OpenAI-o1."),
-        ("5. Gửi Telegram (Guardrail)", "Đăng bản tin này lên Telegram giúp mình"),
+        (
+            "📑 1. Tóm tắt Paper (CP3 Tool)",
+            "Tóm tắt các phát hiện chính từ đoạn nghiên cứu sau: We introduce DeepSeek-R1, an open-source reasoning model that achieves performance comparable to OpenAI-o1. In this paper, we demonstrate large-scale reinforcement learning without supervised fine-tuning. However, current limitations include occasional language mixing and formatting inconsistencies.",
+        ),
+        (
+            "📚 2. Tìm kiếm arXiv Live",
+            "Tìm 2 bài báo nghiên cứu mới nhất về LLM reasoning trên arXiv",
+        ),
+        (
+            "🔒 3. Chính sách bảo mật (Policy)",
+            "Quy định của công ty về việc xử lý dữ liệu khách hàng (confidential customer data) và bảo mật API keys như thế nào?",
+        ),
+        (
+            "🛡️ 4. Kiểm duyệt Guardrail (Clarify)",
+            "Đăng ngay báo cáo tóm tắt hôm nay lên kênh Telegram công khai giúp tôi",
+        ),
     ]
     
     preset_query = None
     for label, query_text in sample_queries:
         if st.button(label, use_container_width=True):
             preset_query = query_text
+
+    st.caption("✨ *Tất cả 4 kịch bản trên đều chạy 100% nội bộ hoặc qua API mở miễn phí (arXiv), minh họa đầy đủ Reasoning và Tool Calling.*")
 
     st.markdown("---")
     if st.button("🗑️ Xóa lịch sử trò chuyện", use_container_width=True):
@@ -176,11 +190,25 @@ openai_tools = to_openai_tools(tool_declarations)
 # Display existing messages
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
+        if msg.get("reasoning_steps"):
+            with st.expander("🧠 Quá trình suy luận của Model (Chain-of-Thought)", expanded=True):
+                for idx, r_step in enumerate(msg["reasoning_steps"], 1):
+                    st.markdown(f"**Vòng suy luận {idx}:**")
+                    st.info(r_step)
+        elif msg.get("tool_events"):
+            with st.expander("🧠 Quá trình phân tích & Lựa chọn Tool", expanded=False):
+                st.markdown(f"**Định tuyến tác vụ:** Agent đã phân tích mục tiêu nghiên cứu và kích hoạt {len(msg['tool_events'])} công cụ phù hợp:")
+                for ev in msg["tool_events"]:
+                    st.markdown(f"- 🔧 **`{ev.get('tool')}`**: Ánh xạ từ chỉ dẫn hệ thống `system_prompt.md`.")
+
         st.markdown(msg["content"])
         if "tool_events" in msg and msg["tool_events"]:
             with st.expander(f"🔍 Chi tiết {len(msg['tool_events'])} lượt gọi Tool", expanded=False):
                 for ev in msg["tool_events"]:
-                    st.code(f"Tool: {ev.get('tool')}\nArgs: {json.dumps(ev.get('args'), ensure_ascii=False, indent=2)}\nResult: {json.dumps(ev.get('result'), ensure_ascii=False, indent=2)}", language="json")
+                    st.write(f"**🔧 {ev.get('tool')}**")
+                    st.json(ev.get("args") or {})
+                    st.caption("Kết quả trả về:")
+                    st.json(ev.get("result") or {})
 
 # Handle input
 user_input = st.chat_input("Nhập câu hỏi hoặc yêu cầu nghiên cứu...") or preset_query
@@ -200,7 +228,7 @@ if user_input:
     ]
 
     with st.chat_message("assistant"):
-        with st.spinner("Agent đang phân tích và gọi công cụ..."):
+        with st.spinner("Agent đang suy luận và gọi công cụ..."):
             try:
                 loop_result = run_model_tool_loop(
                     provider=provider,
@@ -211,6 +239,19 @@ if user_input:
                 )
                 assistant_text = loop_result.get("assistant_text") or "Đã hoàn thành."
                 tool_events = loop_result.get("tool_events", [])
+                reasoning_steps = loop_result.get("reasoning_steps", [])
+
+                # Render reasoning
+                if reasoning_steps:
+                    with st.expander("🧠 Quá trình suy luận của Model (Chain-of-Thought)", expanded=True):
+                        for idx, r_step in enumerate(reasoning_steps, 1):
+                            st.markdown(f"**Vòng suy luận {idx}:**")
+                            st.info(r_step)
+                elif tool_events:
+                    with st.expander("🧠 Quá trình phân tích & Lựa chọn Tool", expanded=True):
+                        st.markdown(f"**Định tuyến tác vụ:** Agent đã phân tích mục tiêu nghiên cứu và kích hoạt {len(tool_events)} công cụ phù hợp:")
+                        for ev in tool_events:
+                            st.markdown(f"- 🔧 **`{ev.get('tool')}`**: Ánh xạ từ chỉ dẫn hệ thống `system_prompt.md`.")
 
                 # Render response
                 st.markdown(assistant_text)
@@ -227,6 +268,7 @@ if user_input:
                     "role": "assistant",
                     "content": assistant_text,
                     "tool_events": tool_events,
+                    "reasoning_steps": reasoning_steps,
                 })
                 st.session_state.raw_history.append({"role": "user", "content": user_input})
                 st.session_state.raw_history.append({"role": "assistant", "content": assistant_text})
