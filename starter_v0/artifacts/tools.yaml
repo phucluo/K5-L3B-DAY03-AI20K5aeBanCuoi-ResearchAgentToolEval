@@ -16,7 +16,7 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Chỉ hỏi khi thiếu thông tin bắt buộc hoặc cần xác nhận một hành động gửi/đăng. Dùng response_type: text để lấy thông tin còn thiếu; dùng yes_no chỉ để xác nhận lần cuối khi nội dung và đích gửi đã cụ thể. Không hỏi xác nhận cho nghiên cứu chỉ đọc mà người dùng đã yêu cầu."
     parameters:
       type: object
       properties:
