@@ -15,6 +15,7 @@ from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 ROOT = Path(__file__).resolve().parent
 ARTIFACTS_DIR = ROOT / "artifacts"
@@ -25,6 +26,7 @@ from env_loader import load_lab_env
 from providers import make_provider
 from tools import load_tool_declarations, to_openai_tools
 from versioning import build_artifact_version, artifact_version_dict
+from visualizer import render_thought_graph_html
 
 load_lab_env(ROOT)
 
@@ -128,6 +130,10 @@ with st.sidebar:
     model_override = model_name.strip() if model_name.strip() else None
 
     st.markdown("---")
+    st.markdown("### 🔮 Trực quan hóa Mạng lưới")
+    show_radar = st.checkbox("Bật Radar Quét Tri thức & Nơ-ron", value=True)
+
+    st.markdown("---")
     st.markdown("### 🛠️ Bộ Công cụ tích hợp (CP3)")
     tool_names = [
         "clarify", "timeline", "social_search", "lookup", "fetch",
@@ -186,6 +192,18 @@ tools_path = ARTIFACTS_DIR / "tools.yaml"
 system_prompt = system_prompt_path.read_text(encoding="utf-8")
 tool_declarations = load_tool_declarations(tools_path)
 openai_tools = to_openai_tools(tool_declarations)
+
+# Neural Thought & Data Retrieval Radar Visualizer
+latest_tools: list[str] = []
+for msg in reversed(st.session_state.messages):
+    if msg.get("tool_events"):
+        latest_tools = [ev.get("tool") for ev in msg["tool_events"] if ev.get("tool")]
+        break
+
+if show_radar:
+    status_label = f"ĐANG KÍCH HOẠT: {', '.join(latest_tools).upper()}" if latest_tools else "HỆ THỐNG NƠ-RON SẴN SÀNG (STANDBY)"
+    with st.expander("🔮 Mạng lưới Suy nghĩ & Radar Quét Tri thức (Neural Thought & Retrieval Radar)", expanded=True):
+        components.html(render_thought_graph_html(latest_tools, status_label, height=360), height=380)
 
 # Display existing messages
 for msg in st.session_state.messages:
@@ -291,6 +309,7 @@ if user_input:
                     ],
                 }
                 write_transcript(st.session_state.transcript_path, transcript_data)
+                st.rerun()
 
             except Exception as exc:
                 err_msg = f"⚠️ Lỗi hệ thống: {type(exc).__name__} — {str(exc)}"
