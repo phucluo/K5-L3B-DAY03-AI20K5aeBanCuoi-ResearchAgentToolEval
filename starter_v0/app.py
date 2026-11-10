@@ -195,7 +195,7 @@ if user_input:
     provider = make_provider(provider_name)
     working_messages = [
         {"role": "system", "content": system_prompt},
-        *trim_history(st.session_state.raw_history, history_window=5),
+        *trim_history(st.session_state.raw_history, 5),
         {"role": "user", "content": user_input},
     ]
 
