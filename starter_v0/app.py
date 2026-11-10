@@ -254,3 +254,4 @@ if user_input:
                 err_msg = f"⚠️ Lỗi hệ thống: {type(exc).__name__} — {str(exc)}"
                 st.error(err_msg)
                 st.session_state.messages.append({"role": "assistant", "content": err_msg})
+
