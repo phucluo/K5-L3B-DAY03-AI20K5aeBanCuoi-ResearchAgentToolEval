@@ -8,76 +8,97 @@
 
 ## 1. Thông tin nhóm
 
-- Tên nhóm:
+- Tên nhóm: 5aeBanCuoi
 - Thành viên và phân công: xem [TEAM.md](../../TEAM.md)
-- Provider/model dùng cho v0–v3:
+- Provider/model dùng cho v0–v3: **Groq** — model `openai/gpt-oss-120b`, gọi qua provider `openrouter` của starter (API Groq tương thích OpenAI; cấu hình `OPENROUTER_BASE_URL=https://api.groq.com/openai/v1` trong `.env`). Vì vậy trong run JSON trường provider ghi là `openrouter`. Lệnh chạy:
+  `python run_eval.py --provider openrouter --model openai/gpt-oss-120b --version <vX> --suite base --eval-cases data/eval_base.json`
 
 ## 2. Mục tiêu và cách tiếp cận — PHẦN A: Giới thiệu agent
 
 ### A1. Agent này làm được gì
 
-> 1–2 câu mô tả agent dùng để làm gì (cho team khác hiểu nhanh).
-
-Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc URL, tổng hợp thành digest, và gửi lên Telegram khi được xác nhận."
+Research agent: tìm tin tức/thông tin trên web, xem bài đăng gần đây của một tài khoản X (Twitter) hoặc tìm bài đăng theo từ khóa, đọc nội dung một URL, tra paper arXiv và policy nội bộ, tổng hợp thành digest — và **hỏi lại khi thiếu thông tin**, **xin xác nhận trước khi gửi** bản tin lên Telegram.
 
 **Cách chạy UI:**
 
-> Lệnh chạy UI (ví dụ `streamlit run app.py`) và dependency đã thêm vào `starter_v0/requirements.txt`.
+> TODO — chờ phần UI (lệnh chạy + dependency trong `starter_v0/requirements.txt`).
 
 **Link dùng thử (deploy):**
 
-> Dán link public để team khác mở thử ngay. Cách deploy nhanh bằng Cloudflare Tunnel xem README. Nếu deploy Vercel/Streamlit Cloud thì dán link đó.
->
-> URL:
+> URL: TODO
 
 ### A2. Tool agent có
 
-> Liệt kê các tool agent đang dùng (gồm tool mới nhóm tự thêm). Mỗi tool 1 dòng: tên + làm được gì.
-
 | Tên tool | Làm được gì | Tool mới nhóm thêm? |
 |---|---|---|
-| clarify | hỏi lại người dùng khi thiếu thông tin | không |
-|  |  |  |
-|  |  |  |
+| clarify | Hỏi lại người dùng khi thiếu thông tin hoặc cần xác nhận | không |
+| timeline | Lấy bài đăng gần đây của một tài khoản X theo handle (vd `sama`) | không |
+| social_search | Tìm bài đăng trên X theo từ khóa (`Latest` / `Top`) | không |
+| lookup | Tìm trên web (Tavily), có `topic` general/news và `timeframe` | không |
+| fetch | Đọc nội dung một URL (Firecrawl) | không |
+| format | Trình bày các item đã có thành markdown digest | không |
+| send | Gửi text lên Telegram channel — chỉ khi `confirmed=true` | không |
+| policy | Tìm trong company policy markdown nội bộ | không |
+| papers | Tìm paper trên arXiv | không |
+| paper_text | Tải PDF arXiv và trích text | không |
+| TODO | (tool mới của nhóm) | **có** |
 
 ### A3. Câu hỏi mẫu để thử
 
-> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay.
-
-1.
-2.
-3.
+1. Tweet mới nhất của Sam Altman là gì?
+2. Tin tức AI hôm nay có gì nổi bật?
+3. Đọc giúp mình bài này: https://openai.com/research/
+4. Tìm tweet về GPT-5 → agent tìm theo từ khóa trên X.
+5. Đăng bản tin này lên Telegram giúp mình → agent phải **hỏi xác nhận**, không gửi ngay.
 
 ## 3. Giải pháp
 
-> Tóm tắt các thay đổi chính trong `starter_v0/artifacts/system_prompt.md` và `starter_v0/artifacts/tools.yaml`, và tool mới nhóm viết (tên, làm gì, khi nào agent nên gọi).
-
--
+- **v1 — `system_prompt.md`** (commit `c6c8578`): bỏ 3 chỉ dẫn xấu cố ý của starter ("đừng hỏi lại, cứ đoán", "chọn tài khoản nổi tiếng như Sam Altman / giả định URL", "muốn gửi thì cứ gửi luôn", "luôn làm trong 1 bước, chọn 1 tool"). Thay bằng 3 rule: (1) thiếu/mơ hồ tham số bắt buộc → gọi `clarify`, không đoán handle/bịa URL; (2) trước `send` phải cho xem nội dung và `clarify` xin xác nhận, chỉ `send(confirmed=true)` sau khi user đồng ý ở lượt sau; (3) yêu cầu nhiều phần → gọi đủ các tool cần thiết.
+- v2, v3: TODO.
+- Tool mới: TODO.
 
 ## 4. Kết quả — PHẦN B: Chi tiết và bằng chứng
 
 ### B1. Version Evidence
 
-Lấy từ `starter_v0/artifacts/version_log.csv` và `starter_v0/runs/*.json`. Chỉ dùng run có `provider_error_cases == 0` và `measured_cases == total_cases`.
+Lấy từ [`starter_v0/artifacts/version_log.csv`](../../starter_v0/artifacts/version_log.csv) và `starter_v0/runs/*.json`. Mọi run dưới đây đều có `provider_error_cases == 0` và `measured_cases == total_cases == 20`.
 
 | Version | Changed Artifact | Hypothesis | Metric Before | Metric After | Run File |
 |---|---|---|---:|---:|---|
-| v0 | baseline |  |  |  |  |
-| v1 |  |  |  |  |  |
+| v0 | baseline (starter chưa sửa) | — | — | case 0.70 · route 0.80 · args 0.70 · multi 0.83 | [`v0_B_base_openrouter_20261110T180108907998.json`](../../starter_v0/runs/v0_B_base_openrouter_20261110T180108907998.json) |
+| v1 | `system_prompt.md` | Lỗi `missing_info` / `wrong_boundary` / `wrong_tool` ở R10–R13 là do prompt starter cố ý khuyến khích đoán, gửi ngay và chỉ dùng 1 tool; bỏ và thay bằng rule clarify / xác nhận send / multi-tool sẽ sửa R10–R13 | case 0.70 · route 0.80 · args 0.70 | case **0.80** · route **0.95** · args **0.80** · multi 0.83 | [`v1_B_base_openrouter_20261110T181455132429.json`](../../starter_v0/runs/v1_B_base_openrouter_20261110T181455132429.json) |
 | v2 |  |  |  |  |  |
 | v3 |  |  |  |  |  |
 
+Ghi chú v0: có một lần chạy v0 trước đó khi chưa cấu hình key tool (Tavily/Firecrawl/RapidAPI) — [`v0_B_base_openrouter_20261110T174810741710.json`](../../starter_v0/runs/v0_B_base_openrouter_20261110T174810741710.json), case 0.65. Prompt/tools hash giống hệt; khác biệt 1 case (R01) do model không tất định (xem mục 5). Nhóm dùng lần chạy thứ hai làm baseline chính thức vì tool trả dữ liệu thật.
+
+Kết quả kiểm chứng giả thuyết v1 theo từng case:
+
+| Case | v0 | v1 | Nhận xét |
+|---|---|---|---|
+| R10_missing_handle | FAIL | **PASS** | Gọi `clarify` thay vì đoán `sama` |
+| R11_missing_url | FAIL | **PASS** | Hỏi URL thay vì tự `lookup` |
+| R12_confirm_before_send | FAIL | FAIL (tiến bộ) | Không còn tự `send`; đã gọi `clarify` nhưng `response_type="text"` (hỏi nội dung) thay vì `"yes_no"` (xin xác nhận) |
+| R13_parallel_web_and_tweets | FAIL | FAIL | Vẫn chỉ 1 tool call (`lookup`, thiếu `social_search`) |
+
+→ Giả thuyết v1 đúng một phần (R10, R11, nửa R12).
+
 ### B2. Failure Analysis
 
-Lấy từ `results[*].result.failures` trong run JSON.
+Lấy từ `results[*].result.failures` trong run v0 chính thức và run v1.
 
-| Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
+| Case ID | Failure Type | Actual Tool Calls (v0) | What Failed | Fix |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| R03_web_news_routing | wrong_arg_value (case label `wrong_tool`) | `lookup(query="AI news today", topic="news", timeframe="day")` | `query` expected `AI`; model nhồi "news today" vào query dù đã có `topic`/`timeframe`. v1 vẫn FAIL (`"AI news"`) | v2: mô tả convention arg của `lookup` trong `tools.yaml` |
+| M02_carryover_timeframe | wrong_arg_value | `lookup(query="robotics news today", topic="news", timeframe="day")` | `query` expected `robotics`; cùng nguyên nhân R03. v1 vẫn FAIL | v2: như R03 |
+| R10_missing_handle | missing_info | `timeline(screenname="sama", limit=5)` | Không hỏi tài khoản nào mà tự đoán Sam Altman — đúng như prompt starter chỉ dẫn | v1 ✅ |
+| R11_missing_url | missing_info | `lookup(query="OpenAI GPT-4 Turbo announcement", ...)` | Không hỏi URL mà tự tìm — prompt starter bảo "assume a likely URL" | v1 ✅ |
+| R12_confirm_before_send | wrong_boundary | `send(confirmed=true, text="🚀 New breakthrough in AI…")` | Tự soạn nội dung và gửi ngay không xin xác nhận (chỉ không gửi được vì chưa có token Telegram). v1: đã `clarify` nhưng sai `response_type` | v1 một phần; v3: mô tả `clarify`/`send` boundary trong `tools.yaml` |
+| R13_parallel_web_and_tweets | wrong_tool | `social_search(query="AI", search_type="Latest")` | Thiếu `lookup` — prompt starter ép "pick one tool". v1: chỉ gọi `lookup`, thiếu `social_search` | v1 chưa đủ; xem mục 7 |
 
 ### B3. Team Eval Cases
 
-Liệt kê đúng 10 case trong `starter_v0/data/eval_group.json` (5 single turn + 5 multi turn).
+> TODO — chờ `starter_v0/data/eval_group.json` (5 single turn + 5 multi turn) và run `--suite group`.
 
 | Case ID | What It Tests | Expected Tool/Behavior | Result |
 |---|---|---|---|
@@ -85,7 +106,7 @@ Liệt kê đúng 10 case trong `starter_v0/data/eval_group.json` (5 single turn
 
 ### B4. Live Chat Evidence
 
-Lấy từ `starter_v0/transcripts/*.transcript.json`.
+> TODO — chờ `starter_v0/transcripts/*.transcript.json`.
 
 | Turn | User Request | Tool Calls | Version Evidence | Outcome |
 |---|---|---|---|---|
@@ -142,9 +163,10 @@ Lỗi đặc thù của model nhỏ (đếm từ run JSON):
 
 ## 5. Khó khăn và cách xử lý
 
-> Khó khăn chính và cách nhóm xử lý. Nếu gặp lỗi kỹ thuật (provider lỗi, hết quota API, tool không chạy), mô tả lỗi và dẫn bằng chứng: run JSON, log, ảnh chụp.
-
--
+- **Chọn provider miễn phí:** nhóm dùng Groq (free tier) thay vì OpenRouter trả phí. Starter không có provider Groq riêng, nhưng API Groq tương thích OpenAI nên dùng lại provider `openrouter` bằng cách đổi `OPENROUTER_BASE_URL`. Hệ quả: run JSON ghi provider `openrouter`; phải luôn truyền `--model openai/gpt-oss-120b` vì model mặc định `openai/gpt-4o-mini` không có trên Groq. Preflight pass.
+- **Rate limit Groq:** header phản hồi cho thấy free tier của `openai/gpt-oss-120b` giới hạn 1.000 request/ngày và **8.000 token/phút**. Mỗi request mang system prompt + 10 tool schema (~2–3k token), nên nguy cơ HTTP 429 → `provider_error` → run không hợp lệ, nhất là khi `tools.yaml` dài ra ở v2/v3 hoặc nhiều thành viên dùng chung key. Cách xử lý: kiểm tra `provider_error_cases == 0` sau mỗi run; mỗi thành viên dùng key riêng. Đến v1 chưa run nào bị lỗi provider.
+- **Run v0 đầu tiên thiếu key tool:** lần chạy đầu ([`v0_..._174810741710.json`](../../starter_v0/runs/v0_B_base_openrouter_20261110T174810741710.json)) các tool trả `Missing TAVILY_API_KEY env var`. Điểm vẫn hợp lệ (eval chấm routing + args), nhưng nhóm chạy lại sau khi cấu hình đủ key để log có kết quả tool thật.
+- **Model không tất định:** cùng prompt/tools hash, R01 lần 1 FAIL (`screenname="SamAltman"`), lần 2 PASS (`"sama"`) dù `temperature=0`. Vì vậy chênh lệch ±1 case (±0.05) có thể chỉ là nhiễu; nhóm so sánh theo từng case chứ không chỉ tổng điểm.
 
 ## 6. Tổng hợp đóng góp
 
@@ -152,11 +174,12 @@ Chi tiết đóng góp của từng thành viên nằm trong [TEAM.md](../../TEA
 
 ## 7. Hạn chế và hướng cải thiện — B6. Reflection
 
-- Fix nào thuộc `system_prompt.md`?
-- Fix nào thuộc `tools.yaml`?
-- Failure nào cần review thủ công thay vì chấm tự động?
-- Nếu có thêm một vòng, nhóm sẽ thử giả thuyết nào?
+- **Fix nào thuộc `system_prompt.md`?** Hành vi chung: khi nào phải hỏi lại (R10, R11), boundary xác nhận trước hành động có side effect (R12), được gọi nhiều tool (R13). v1 cho thấy chỉ bỏ chỉ dẫn xấu + thêm rule đã sửa được R10, R11.
+- **Fix nào thuộc `tools.yaml`?** Convention của từng argument (R03, M02: `query` chỉ là chủ đề, "tin tức"/"hôm nay" thuộc `topic`/`timeframe`) và chi tiết tham số như `clarify.response_type="yes_no"` khi xin xác nhận (R12). Kế hoạch v2/v3.
+- **Failure nào cần review thủ công?** R12 ở v1: agent đã không gửi và đã hỏi lại (hành vi an toàn) nhưng vẫn FAIL vì `response_type`; hỏi nội dung trước khi hỏi xác nhận cũng là hành vi hợp lý khi user chưa đưa nội dung. R13: agent starter chỉ gọi model một lần, nên model phải trả 2 tool call song song trong một response — có thể là giới hạn của model hơn là của prompt.
+- **Nếu có thêm một vòng:** TODO (sau v3).
 
 ## 8. Tài liệu tham khảo
 
--
+- [README.md](../../README.md), [RUBRIC.md](../../RUBRIC.md), [docs/TOOL-SETUP.md](../../docs/TOOL-SETUP.md)
+- Groq API (OpenAI-compatible): https://console.groq.com/docs
