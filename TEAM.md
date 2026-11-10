@@ -11,7 +11,7 @@
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 | Lê Ngọc Khánh | 2A202603804 |  | lekhanh2k5-dotcom | Prompt & tool declaration (v0–v3), version log |
+|   1 | Lê Ngọc Khánh | 2A202603804 | lekhanh2k5@gmail.com | lekhanh2k5-dotcom | Prompt & tool declaration (v0–v3), version log |
 |   2 |        |      |       |        |         |
 
 ## Cá nhân

@@ -4,7 +4,7 @@
 
 - Họ tên: Lê Ngọc Khánh
 - MSSV: 2A202603804
-- Email:
+- Email: lekhanh2k5@gmail.com
 
 ## 2. Phần việc phụ trách
 
