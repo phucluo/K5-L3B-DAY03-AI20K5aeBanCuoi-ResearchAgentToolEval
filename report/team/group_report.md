@@ -54,7 +54,8 @@ Research agent: tìm tin tức/thông tin trên web, xem bài đăng gần đây
 ## 3. Giải pháp
 
 - **v1 — `system_prompt.md`** (commit `c6c8578`): bỏ 3 chỉ dẫn xấu cố ý của starter ("đừng hỏi lại, cứ đoán", "chọn tài khoản nổi tiếng như Sam Altman / giả định URL", "muốn gửi thì cứ gửi luôn", "luôn làm trong 1 bước, chọn 1 tool"). Thay bằng 3 rule: (1) thiếu/mơ hồ tham số bắt buộc → gọi `clarify`, không đoán handle/bịa URL; (2) trước `send` phải cho xem nội dung và `clarify` xin xác nhận, chỉ `send(confirmed=true)` sau khi user đồng ý ở lượt sau; (3) yêu cầu nhiều phần → gọi đủ các tool cần thiết.
-- v2, v3: TODO.
+- **v2 — `tools.yaml`, khối `lookup`**: viết lại `description` (dùng cho tin tức/bài viết/thông tin web; không dùng cho tweet → `social_search`/`timeline`, không dùng để đọc URL → `fetch`) và mô tả từng param: `query` chỉ chứa từ khóa chủ đề cốt lõi, không thêm "news/today/latest"; `topic="news"` khi hỏi tin tức; `timeframe="day"` cho hôm nay, `"week"` cho tuần này.
+- v3: TODO.
 - Tool mới: TODO.
 
 ## 4. Kết quả — PHẦN B: Chi tiết và bằng chứng
@@ -67,7 +68,7 @@ Lấy từ [`starter_v0/artifacts/version_log.csv`](../../starter_v0/artifacts/v
 |---|---|---|---:|---:|---|
 | v0 | baseline (starter chưa sửa) | — | — | case 0.70 · route 0.80 · args 0.70 · multi 0.83 | [`v0_B_base_openrouter_20261110T180108907998.json`](../../starter_v0/runs/v0_B_base_openrouter_20261110T180108907998.json) |
 | v1 | `system_prompt.md` | Lỗi `missing_info` / `wrong_boundary` / `wrong_tool` ở R10–R13 là do prompt starter cố ý khuyến khích đoán, gửi ngay và chỉ dùng 1 tool; bỏ và thay bằng rule clarify / xác nhận send / multi-tool sẽ sửa R10–R13 | case 0.70 · route 0.80 · args 0.70 | case **0.80** · route **0.95** · args **0.80** · multi 0.83 | [`v1_B_base_openrouter_20261110T181455132429.json`](../../starter_v0/runs/v1_B_base_openrouter_20261110T181455132429.json) |
-| v2 |  |  |  |  |  |
+| v2 | `tools.yaml` (khối `lookup`) | R03/M02 sai `query` (`"AI news today"`) vì mô tả param của `lookup` quá sơ sài ("Truy vấn", "Phân loại"); ghi rõ convention — `query` chỉ chứa chủ đề cốt lõi, "tin tức"/"hôm nay" biểu đạt qua `topic`/`timeframe` — sẽ khiến model truyền `query="AI"` / `"robotics"` | case 0.80 · route 0.95 · args 0.80 · multi 0.83 | case **0.90** · route 0.95 · args **0.90** · multi **1.00** | [`v2_B_base_openrouter_20261110T183035054608.json`](../../starter_v0/runs/v2_B_base_openrouter_20261110T183035054608.json) |
 | v3 |  |  |  |  |  |
 
 Ghi chú v0: có một lần chạy v0 trước đó khi chưa cấu hình key tool (Tavily/Firecrawl/RapidAPI) — [`v0_B_base_openrouter_20261110T174810741710.json`](../../starter_v0/runs/v0_B_base_openrouter_20261110T174810741710.json), case 0.65. Prompt/tools hash giống hệt; khác biệt 1 case (R01) do model không tất định (xem mục 5). Nhóm dùng lần chạy thứ hai làm baseline chính thức vì tool trả dữ liệu thật.
@@ -83,14 +84,23 @@ Kết quả kiểm chứng giả thuyết v1 theo từng case:
 
 → Giả thuyết v1 đúng một phần (R10, R11, nửa R12).
 
+Kết quả kiểm chứng giả thuyết v2 (chỉ đổi `tools.yaml`, `prompt_hash` giữ nguyên `4abc4c34…`):
+
+| Case | v1 | v2 | Actual call v2 |
+|---|---|---|---|
+| R03_web_news_routing | FAIL (`query="AI news"`) | **PASS** | `lookup(query="AI", topic="news", timeframe="day")` |
+| M02_carryover_timeframe | FAIL (`query="robotics news today"`) | **PASS** | `lookup(query="robotics", topic="news", timeframe="day")` |
+
+→ Giả thuyết v2 đúng hoàn toàn: 2/2 case mục tiêu chuyển PASS, không case nào đang PASS bị FAIL lại. R12, R13 không đổi (ngoài phạm vi giả thuyết v2).
+
 ### B2. Failure Analysis
 
 Lấy từ `results[*].result.failures` trong run v0 chính thức và run v1.
 
 | Case ID | Failure Type | Actual Tool Calls (v0) | What Failed | Fix |
 |---|---|---|---|---|
-| R03_web_news_routing | wrong_arg_value (case label `wrong_tool`) | `lookup(query="AI news today", topic="news", timeframe="day")` | `query` expected `AI`; model nhồi "news today" vào query dù đã có `topic`/`timeframe`. v1 vẫn FAIL (`"AI news"`) | v2: mô tả convention arg của `lookup` trong `tools.yaml` |
-| M02_carryover_timeframe | wrong_arg_value | `lookup(query="robotics news today", topic="news", timeframe="day")` | `query` expected `robotics`; cùng nguyên nhân R03. v1 vẫn FAIL | v2: như R03 |
+| R03_web_news_routing | wrong_arg_value (case label `wrong_tool`) | `lookup(query="AI news today", topic="news", timeframe="day")` | `query` expected `AI`; model nhồi "news today" vào query dù đã có `topic`/`timeframe`. v1 vẫn FAIL (`"AI news"`) | v2 ✅: mô tả convention arg của `lookup` trong `tools.yaml` |
+| M02_carryover_timeframe | wrong_arg_value | `lookup(query="robotics news today", topic="news", timeframe="day")` | `query` expected `robotics`; cùng nguyên nhân R03. v1 vẫn FAIL | v2 ✅: như R03 |
 | R10_missing_handle | missing_info | `timeline(screenname="sama", limit=5)` | Không hỏi tài khoản nào mà tự đoán Sam Altman — đúng như prompt starter chỉ dẫn | v1 ✅ |
 | R11_missing_url | missing_info | `lookup(query="OpenAI GPT-4 Turbo announcement", ...)` | Không hỏi URL mà tự tìm — prompt starter bảo "assume a likely URL" | v1 ✅ |
 | R12_confirm_before_send | wrong_boundary | `send(confirmed=true, text="🚀 New breakthrough in AI…")` | Tự soạn nội dung và gửi ngay không xin xác nhận (chỉ không gửi được vì chưa có token Telegram). v1: đã `clarify` nhưng sai `response_type` | v1 một phần; v3: mô tả `clarify`/`send` boundary trong `tools.yaml` |
