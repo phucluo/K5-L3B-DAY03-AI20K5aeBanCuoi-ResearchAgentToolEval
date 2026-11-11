@@ -18,10 +18,26 @@ OPENROUTER_API_KEY=<your-key>
 Alternatives:
 
 ```bash
+GROQ_API_KEY=<your-key>
 OPENAI_API_KEY=<your-key>
 ANTHROPIC_API_KEY=<your-key>
 GEMINI_API_KEY=<your-key>
 ```
+
+For Groq, select `groq` (not `openrouter`) so the client uses Groq's API
+endpoint and a Groq-compatible default model:
+
+```bash
+# In starter_v0/.env
+GROQ_API_KEY=<your-groq-key>
+
+# From starter_v0/
+python scripts/preflight_provider.py --provider groq
+```
+
+You can override the default model with `--model`, or set `GROQ_MODEL` in
+`.env`. The OpenRouter provider expects an OpenRouter API key and endpoint;
+Groq keys are not interchangeable with OpenRouter keys.
 
 Preflight:
 
