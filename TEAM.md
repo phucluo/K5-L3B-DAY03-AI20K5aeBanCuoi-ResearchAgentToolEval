@@ -12,10 +12,10 @@
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
 |   1 | Nguyễn Lương Phúc | 2A202603889 | 26ai.phucnl@vinuni.edu.vn | phucluo | Team lead - Review merge PR, quản lý artifacts/version_log.csv, hoàn thiện mục Reflection và rà soát checklist trước khi nộp bài|
-|   2 | Nguyễn Anh Quân | 2A202603892 |       | AnhQuanHANU| Phụ trách CP3 (Code Tool mới `summarize_paper`, viết Unit Test, tích hợp `GroqProvider`, xây dựng 10 test case CP4|
+|   2 | Nguyễn Anh Quân | 2A202603892 | quannguyen8449@gmail.com | AnhQuanHANU| Phụ trách CP3 (Code Tool mới `summarize_paper`, viết Unit Test, tích hợp `GroqProvider`, xây dựng 10 test case CP4|
 |   3 | Lê Ngọc Khánh | 2A202603804 | lekhanh2k5@gmail.com | lekhanh2k5-dotcom | Prompt & tool declaration (v0–v3), version log |
 |   4 | Nguyễn Minh Thành | 2A202603884 | thanhhy98@gmail.com | thanhhy98 | Evaluation, Q&A (v7)|
-|   5 | Nguyễn Thế Bảo | 2A202603825 |       | NTBao | Phụ trách xây dựng Streamlit UI, cấu hình `requirements.txt`|
+|   5 | Nguyễn Thế Bảo | 2A202603825 | nguyenthebao2506@gmail.com | NTBao | Phụ trách xây dựng Streamlit UI, cấu hình `requirements.txt`|
 
 # Cá nhân
 
