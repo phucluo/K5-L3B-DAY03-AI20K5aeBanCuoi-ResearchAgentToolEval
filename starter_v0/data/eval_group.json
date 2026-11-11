@@ -1,7 +1,275 @@
 {
   "dataset_id": "day03_v2_research_group",
   "dataset_role": "group",
-  "description": "Case do NHÓM tự viết thêm để cover thêm trường hợp. Mỗi case cần: id, phase='B', query HOẶC turns, failure_type (thuộc allowed_failure_types), và expect (tool_calls[...] hoặc no_tool=true). Nên kèm metadata.what_it_tests.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "Bộ đánh giá 10 test case của nhóm: 5 single-turn và 5 multi-turn, bao phủ tool mới summarize_paper, papers, policy, clarify, và các ranh giới xác nhận.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_arxiv_papers_search",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tìm các bài báo nghiên cứu khoa học về LLM reasoning trên arXiv",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "LLM reasoning"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_arxiv_papers",
+        "difficulty": "easy",
+        "what_it_tests": "Tìm bài báo khoa học arXiv -> gọi papers với query trích xuất"
+      }
+    },
+    {
+      "id": "G02_summarize_paper_tool",
+      "phase": "B",
+      "suite": "group",
+      "query": "Tóm tắt các phát hiện và đóng góp từ đoạn văn bản nghiên cứu này: We present DeepSeek-R1, an open-source reasoning model that achieves performance comparable to OpenAI-o1 across benchmarks.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "summarize_paper",
+            "args": {
+              "focus_area": "findings"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_new_tool_summarize_paper",
+        "difficulty": "medium",
+        "what_it_tests": "Tóm tắt văn bản nghiên cứu -> gọi công cụ mới summarize_paper với focus_area=findings"
+      }
+    },
+    {
+      "id": "G03_company_policy_privacy",
+      "phase": "B",
+      "suite": "group",
+      "query": "Chính sách bảo mật dữ liệu của công ty quy định thế nào về việc gửi dữ liệu ra bên ngoài?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "policy",
+            "args": {
+              "policy_area": "data_privacy"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "routing_policy_search",
+        "difficulty": "medium",
+        "what_it_tests": "Tra cứu chính sách nội bộ về data privacy -> gọi policy với policy_area=data_privacy"
+      }
+    },
+    {
+      "id": "G04_missing_paper_text",
+      "phase": "B",
+      "suite": "group",
+      "query": "Trích xuất các phát hiện nghiên cứu của bài báo giúp mình",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "missing_info_paper_clarification",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu tóm tắt nhưng thiếu nội dung văn bản/URL -> gọi clarify response_type=text"
+      }
+    },
+    {
+      "id": "G05_out_of_scope_cooking",
+      "phase": "B",
+      "suite": "group",
+      "query": "Cho mình công thức nấu món phở bò Hà Nội chuẩn vị truyền thống",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "metadata": {
+        "skill": "out_of_scope_handling",
+        "difficulty": "easy",
+        "what_it_tests": "Câu hỏi nấu ăn ngoài phạm vi research agent -> từ chối, không gọi tool"
+      }
+    },
+    {
+      "id": "G06_multiturn_clarify_then_papers",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm bài báo khoa học mới nhất giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Về chủ đề Diffusion Models nhé"
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "Diffusion Models"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_clarify_fill_papers",
+        "difficulty": "medium",
+        "what_it_tests": "Turn 1 thiếu topic, Turn 2 cung cấp topic -> gọi papers(query='Diffusion Models')"
+      }
+    },
+    {
+      "id": "G07_multiturn_summarize_methodology",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Đây là nội dung nghiên cứu: We train the model using reinforcement learning with PPO algorithm and reward models."
+        },
+        {
+          "role": "user",
+          "content": "Hãy tóm tắt phương pháp kỹ thuật của đoạn nghiên cứu trên"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "summarize_paper",
+            "args": {
+              "focus_area": "methodology"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_summarize_focus_area",
+        "difficulty": "hard",
+        "what_it_tests": "Nhiều lượt hội thoại trích xuất phương pháp bài báo -> summarize_paper focus_area=methodology"
+      }
+    },
+    {
+      "id": "G08_multiturn_switch_web_to_twitter",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức web về Claude 3.5 Sonnet hôm nay"
+        },
+        {
+          "role": "user",
+          "content": "Chuyển sang tìm tweet xem mọi người bàn gì về Claude 3.5 Sonnet"
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "Claude 3.5 Sonnet"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_switch_web_to_social",
+        "difficulty": "medium",
+        "what_it_tests": "Chuyển từ web search sang social_search trên Twitter"
+      }
+    },
+    {
+      "id": "G09_multiturn_confirm_telegram_send",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Gửi bản tin AI lên kênh Telegram: 'Bản tin tổng hợp hôm nay'"
+        },
+        {
+          "role": "user",
+          "content": "Tôi xác nhận đồng ý gửi đi ngay bây giờ"
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "send",
+            "args": {
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_confirm_send_boundary",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi user đã xác nhận đồng ý ở lượt sau, agent gọi send với confirmed=true"
+      }
+    },
+    {
+      "id": "G10_multiturn_correction_timeframe",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin tức công nghệ trong tuần này"
+        },
+        {
+          "role": "user",
+          "content": "À chỉ tìm tin tức trong ngày hôm nay thôi"
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "timeframe": "day",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "skill": "multiturn_argument_correction",
+        "difficulty": "medium",
+        "what_it_tests": "Người dùng sửa timeframe từ week sang day trong lượt tiếp theo"
+      }
+    }
+  ]
 }
