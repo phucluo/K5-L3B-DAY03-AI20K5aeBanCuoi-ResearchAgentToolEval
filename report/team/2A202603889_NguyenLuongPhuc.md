@@ -23,12 +23,12 @@
 ### Tích hợp bài làm và tổng hợp đóng góp
 
 - Mở và merge PR #2 từ `AnhQuanHanuDay03` vào `main` bằng merge commit `18b7b30`, đưa code của Quân cùng 7 commit trong PR vào lịch sử nhánh nộp.
-- Chốt các outcomes của từng thành viên để đưa vào `group_report.md`; cập nhật thông tin và vai trò nhóm trưởng tại mục 6 của báo cáo nhóm qua commit `012c2a9`.
+- Cập nhật tên, MSSV và vai trò của mình tại mục 6 trong `group_report.md` qua commit `012c2a9`.
 - Cập nhật thông tin thành viên, phân công trong `TEAM.md` và hoàn thiện báo cáo cá nhân theo mẫu 5 mục của lab.
 
 ### Rà soát version log và kết quả thực nghiệm
 
-Đối chiếu bốn dòng v0–v3 trong [version log](../../starter_v0/artifacts/version_log.csv) với các run JSON được liên kết bên dưới. Cả bốn run dùng Groq `openai/gpt-oss-120b`, có `provider_error_cases == 0` và `measured_cases == total_cases == 20`. Các trường `artifact_version`, tiền tố `prompt_hash`/`tools_hash`, `metric_after` và `run_file` trong CSV khớp với run tương ứng.
+Với sự hỗ trợ của Codex, đối chiếu bốn dòng v0–v3 trong [version log](../../starter_v0/artifacts/version_log.csv) với các run JSON được liên kết bên dưới. Cả bốn run dùng Groq `openai/gpt-oss-120b`, có `provider_error_cases == 0` và `measured_cases == total_cases == 20`. Các trường `artifact_version`, tiền tố `prompt_hash`/`tools_hash`, `metric_after` và `run_file` trong CSV khớp với run tương ứng.
 
 | Version | Artifact thay đổi | Case accuracy trước → sau | Nhận xét từ run |
 |---|---|---|---|
@@ -64,7 +64,7 @@
 - PR tích hợp code Quân và commit merge do `phucluo` thực hiện. [PR #2](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/pull/2), [commit 18b7b30](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/18b7b305f2c7ffc9d97383e0f18f110bbd0855bf).
 - Cập nhật vai trò nhóm trưởng trong tổng hợp đóng góp. [Commit 012c2a9](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/012c2a99a7a4ad9754eddb18a49e3511e3a7ff7f).
 - Cập nhật phân công thành viên. [Commit 96810d7](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/96810d777b6193f95bc547aab2115bd0d8936499), [TEAM.md](../../TEAM.md).
-- Quản lý bằng chứng version và đối chiếu Reflection. [Version log](../../starter_v0/artifacts/version_log.csv), [báo cáo nhóm](group_report.md).
+- Dữ liệu nhóm dùng để đối chiếu version và tổng hợp nhận xét Reflection. [Version log](../../starter_v0/artifacts/version_log.csv), [báo cáo nhóm](group_report.md).
 - Run base đã đối chiếu. [v0](../../starter_v0/runs/v0_B_base_groq_20261110T175650792984.json), [v1](../../starter_v0/runs/v1_B_base_groq_20261110T180058765915.json), [v2](../../starter_v0/runs/v2_B_base_groq_20261110T180517362630.json), [v3](../../starter_v0/runs/v3_B_base_groq_20261110T180941997435.json).
 - Eval nhóm và live chat. [10 case nhóm](../../starter_v0/data/eval_group.json), [run group](../../starter_v0/runs/v3_B_group_groq_20261110T181849672426.json), [transcript 4 lượt](../../starter_v0/transcripts/v3_groq_20261110T181940006104.transcript.json).
 - Hướng dẫn dùng để rà soát bài. [README.md](../../README.md), [RULES.md](../../RULES.md), [RUBRIC.md](../../RUBRIC.md), [SUBMISSION.md](../../SUBMISSION.md).
@@ -72,10 +72,10 @@
 ### AI/công cụ đã dùng và cách kiểm tra kết quả
 
 - Dùng Codex để hỗ trợ hiểu quy trình PR/merge, đọc hướng dẫn lab, đối chiếu bằng chứng trong repo và biên tập báo cáo cá nhân cùng phần đóng góp trong `TEAM.md`.
-- Dùng GitHub để xem lịch sử commit, PR và nội dung trên `main`; dùng Python kiểm tra CSV, hash SHA-256 của artifacts và số liệu từ JSON trong lần rà soát này.
+- Dùng GitHub để xem lịch sử commit, PR và nội dung trên `main`. Trong quá trình hỗ trợ rà soát, Codex dùng Python để kiểm tra CSV, hash SHA-256 của artifacts và số liệu JSON tải trực tiếp từ GitHub.
 - Cách kiểm tra là đối chiếu từng nhận xét với đường dẫn file/commit/PR, kiểm tra số case, điều kiện run hợp lệ, metric và hash. Các nhận xét về unit test/UI được ghi kèm việc cần xác nhận bằng output hoặc chạy thử.
-- Các run được dẫn là kết quả nhóm đã lưu trong repo. Phần rà soát này kiểm tra lại dữ liệu đã lưu.
+- Các run được dẫn là kết quả nhóm đã lưu trên GitHub. Phần rà soát này đối chiếu dữ liệu của nhánh `main` tại commit [`ba823d8`](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/tree/ba823d8f8a00d721165eec3dc361e64835c39d22).
 
 ## 5. Tự đánh giá
-
+- Kiểm soát đầu ra ở mức tạm chấp nhận cho dự án.
 - Bản thân còn nhiều điều chưa làm tốt trong việc chủ động phân công và thúc đẩy các thành viên hoàn thiện tiến độ sớm.
