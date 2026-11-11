@@ -16,7 +16,6 @@
 |   3 | Lê Ngọc Khánh | 2A202603804 | lekhanh2k5@gmail.com | lekhanh2k5-dotcom | Prompt & tool declaration (v0–v3), version log |
 |   4 | Nguyễn Minh Thành | 2A202603884 | thanhhy98@gmail.com | thanhhy98 | Evaluation, Q&A (v7)|
 |   5 | Nguyễn Thế Bảo | 2A202603825 |       | NTBao | Phụ trách xây dựng Streamlit UI, cấu hình `requirements.txt`|
-|   6 |        |      |       |        |         |
 
 ## Cá nhân
 
@@ -29,6 +28,29 @@ report/team/MSSV_HoTen.md
 Ví dụ: `report/team/20241234_NguyenVanAn.md`.
 
 Sao chép mục dưới đây cho từng thành viên.
+
+## NguyenLuongPhuc-2A202603889
+
+### Phần việc phụ trách
+
+- Team lead; review và merge PR để tích hợp bài làm lên `main`.
+- Quản lý, rà soát `starter_v0/artifacts/version_log.csv`.
+- Tổng hợp nhận xét cho B6 Reflection và rà soát checklist trước khi nộp bài.
+
+### Đóng góp cụ thể
+
+- Mở và merge PR #2 từ `AnhQuanHanuDay03` vào `main`, đưa code chính của Quân cùng 7 commit trong PR vào lịch sử nhánh nộp.
+- Cập nhật tên, MSSV và vai trò của mình trong `group_report.md`; cập nhật thông tin và phân công thành viên trong `TEAM.md`.
+- Với sự hỗ trợ của Codex, đối chiếu version log với run JSON trên `main`, kiểm tra hash, đường dẫn run và case accuracy `0.70 → 0.90 → 0.90 → 0.90`.
+- Tổng hợp nhận xét về system prompt, tool declaration và các lỗi còn lại vào báo cáo cá nhân để phục vụ B6 Reflection.
+- Ghi kết quả rà soát checklist và các mục còn cần xác nhận trước khi chốt bài trong báo cáo cá nhân.
+
+### Bằng chứng
+
+- Tích hợp code chính của nhóm. [PR #2](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/pull/2), [commit 18b7b30](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/18b7b305f2c7ffc9d97383e0f18f110bbd0855bf).
+- Cập nhật vai trò và phân công. [Commit 012c2a9](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/012c2a99a7a4ad9754eddb18a49e3511e3a7ff7f), [commit 96810d7](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/96810d777b6193f95bc547aab2115bd0d8936499).
+- Chi tiết đối chiếu, Reflection và checklist. [Báo cáo cá nhân](report/team/2A202603889_NguyenLuongPhuc.md).
+- Dữ liệu thực nghiệm của nhóm. [Version log](starter_v0/artifacts/version_log.csv), [báo cáo nhóm](report/team/group_report.md).
 
 ## LeNgocKhanh-2A202603804
 
@@ -78,5 +100,3 @@ Sao chép mục dưới đây cho từng thành viên.
 -
 
 ### Bằng chứng
-
--
