@@ -147,7 +147,7 @@ Nhóm phân chia 5 vai trò rõ ràng, đảm bảo mỗi thành viên đều c�
 1. **Thành viên 1 — Lê Ngọc Khánh (`2A202603804`)**: Phụ trách phân tích Baseline `v0`, xây dựng giả thuyết `v1` trên `system_prompt.md`, soạn bảng Failure Analysis B2 và Phần A.
 2. **Thành viên 2 — Nguyễn Anh Quân (`2A202603892`)**: Phụ trách CP3 (Code Tool mới `summarize_paper` + Viết bộ Unit Test đạt 84/84 test xanh), tích hợp `GroqProvider` và xây dựng bộ 10 test case nhóm CP4.
 3. **Thành viên 3 — Kỹ sư Giao diện & Live Demo (CP5)**: Phụ trách xây dựng Streamlit UI [`app.py`](../../starter_v0/app.py) tone xanh tím than, cấu hình `requirements.txt`, thực hiện live chat kiểm tra transcript và chuẩn bị máy demo Showdown.
-4. **Thành viên 4 — Kỹ sư Kiểm thử & Đánh giá Nhóm (CP4)**: Phụ trách rà soát 10 test case trong [`eval_group.json`](../../starter_v0/data/eval_group.json), chạy thực nghiệm `--suite group` đạt 10/10 passed và điền Bảng B3, B5a.
+4. **Thành viên 4 — Nguyễn Minh Thành (`2A202603884`)**: Phụ trách rà soát 10 test case trong [`eval_group.json`](../../starter_v0/data/eval_group.json), chạy thực nghiệm `--suite group` đạt 10/10 passed và điền Bảng B3, B5a.
 5. **Thành viên 5 — Nguyễn Lương Phúc (`2A202603889`)**: Phụ trách review merge PR, quản lý `artifacts/version_log.csv`, hoàn thiện mục Reflection, điền danh sách [`TEAM.md`](../../TEAM.md) và rà soát checklist trước khi nộp bài.
 
 ---
