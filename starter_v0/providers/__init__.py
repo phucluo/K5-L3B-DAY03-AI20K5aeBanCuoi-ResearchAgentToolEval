@@ -4,6 +4,7 @@ from providers.groq_provider import GroqProvider
 from providers.anthropic_provider import AnthropicProvider
 from providers.gemini_provider import GeminiProvider
 from providers.ollama_provider import OllamaProvider
+from providers.groq_provider import GroqProvider
 
 
 def make_provider(name: str):
@@ -19,4 +20,6 @@ def make_provider(name: str):
         return GeminiProvider()
     if name == "ollama":
         return OllamaProvider()
+    if name == "groq":
+        return GroqProvider()
     raise ValueError(f"Unknown provider: {name}")

@@ -1,0 +1,608 @@
+{
+  "transcript_id": "v3_groq_20261110T181940006104",
+  "version": "v3",
+  "artifact_version": "v3+p78914f1c4e10+t6a18d5b42487",
+  "prompt_hash": "78914f1c4e10a7ff7ea96069045f0618274e3d8c65703312021752e6756ec650",
+  "tools_hash": "6a18d5b42487dc745ee68399585772d703d68169b276b5561e7b840d07cc1f79",
+  "provider": "groq",
+  "model": "openai/gpt-oss-120b",
+  "system_prompt": "E:\\AI\\K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "E:\\AI\\K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-11-10T18:19:40",
+  "updated_at": "2026-11-10T18:21:25",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-11-10T18:19:40",
+      "user": "Tóm tắt các phát hiện từ nghiên cứu: We propose a new reasoning model that outperforms existing baselines by 20% on math tasks.",
+      "status": "answered",
+      "assistant_text": "**Tóm tắt các phát hiện chính**\n\n- Mô hình suy luận mới được đề xuất trong nghiên cứu đạt **hiệu suất cao hơn 20 %** so với các mô hình cơ sở hiện có trên các bài toán toán học. (Nguồn: kết quả công cụ `summarize_paper`)",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "summarize_paper",
+              "args": {
+                "focus_area": "findings",
+                "max_points": 3,
+                "paper_text": "We propose a new reasoning model that outperforms existing baselines by 20% on math tasks."
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "summarize_paper",
+              "args": {
+                "focus_area": "findings",
+                "max_points": 3,
+                "paper_text": "We propose a new reasoning model that outperforms existing baselines by 20% on math tasks."
+              },
+              "result": {
+                "tool": "summarize_paper",
+                "focus_area": "findings",
+                "point_count": 1,
+                "takeaways": [
+                  "We propose a new reasoning model that outperforms existing baselines by 20% on math tasks"
+                ],
+                "status": "success"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "**Tóm tắt các phát hiện chính**\n\n- Mô hình suy luận mới được đề xuất trong nghiên cứu đạt **hiệu suất cao hơn 20 %** so với các mô hình cơ sở hiện có trên các bài toán toán học. (Nguồn: kết quả công cụ `summarize_paper`)",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "summarize_paper",
+          "args": {
+            "focus_area": "findings",
+            "max_points": 3,
+            "paper_text": "We propose a new reasoning model that outperforms existing baselines by 20% on math tasks."
+          },
+          "result": {
+            "tool": "summarize_paper",
+            "focus_area": "findings",
+            "point_count": 1,
+            "takeaways": [
+              "We propose a new reasoning model that outperforms existing baselines by 20% on math tasks"
+            ],
+            "status": "success"
+          }
+        }
+      ],
+      "ended_at": "2026-11-10T18:19:44"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-11-10T18:19:44",
+      "user": "Tìm các bài báo khoa học liên quan về LLM reasoning trên arXiv",
+      "status": "answered",
+      "assistant_text": "- Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm. - [arxiv.org](http://arxiv.org/abs/2606.30247v1)  \n- Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận. - [arxiv.org](http://arxiv.org/abs/2509.26306v5)  \n- Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM. - [arxiv.org](http://arxiv.org/abs/2505.03786v1)  \n- Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn. - [arxiv.org](http://arxiv.org/abs/2406.13803v3)  \n- Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích. - [arxiv.org](http://arxiv.org/abs/2604.08140v1)",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "papers",
+              "args": {
+                "max_results": 5,
+                "query": "LLM reasoning",
+                "sort_by": "relevance"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "papers",
+              "args": {
+                "max_results": 5,
+                "query": "LLM reasoning",
+                "sort_by": "relevance"
+              },
+              "result": {
+                "tool": "arxiv_search",
+                "query": "LLM reasoning",
+                "api_query": "all:LLM AND all:reasoning",
+                "total_results": 24285,
+                "items": [
+                  {
+                    "arxiv_id": "2606.30247v1",
+                    "title": "Grounding LLM Reasoning under Incomplete Graph Evidence",
+                    "summary": "Knowledge graphs can guide large language models (LLMs) reasoning, but the graph seen by a system is usually a retrieved, linked, temporally scoped, and incomplete evidence state rather than a complete account of truth. We develop a theoretical perspective on grounding observable LLM trajectories under such incomplete graph evidence.The evidence state induces entity anchors, typed relation residuals, path energies, and support regions, while the language model supplies a prior over candidate trajectories. We show that, under open-world incompleteness, no hard rule based only on the observed state can both reject every false unsupported trajectory and retain every true-but-unobserved one.We then characterize soft grounding as a KL-regularized deformation of the LLM prior: finite slack preserves support for unsupported but non-contradicted trajectories, whereas hard conditioning appears as an infinite-penalty limit.The framework also yields stability bounds under evidence perturbations and clarifies the constraint regimes appropriate for GraphRAG, KGQA, graph agents, constrained decoding, and faithful generation. The claims are evidence-relative: KG compatibility is treated as declared support, not factual truth.",
+                    "authors": [
+                      "Jiaqi Li",
+                      "Fanghui Song"
+                    ],
+                    "published": "2026-06-29T12:56:21Z",
+                    "updated": "2026-06-29T12:56:21Z",
+                    "url": "http://arxiv.org/abs/2606.30247v1",
+                    "pdf_url": "https://arxiv.org/pdf/2606.30247v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CL",
+                    "categories": [
+                      "cs.CL"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2509.26306v5",
+                    "title": "Interactive Learning for LLM Reasoning",
+                    "summary": "Existing multi-agent learning approaches have developed interactive training environments to explicitly promote collaboration among multiple Large Language Models (LLMs), thereby constructing stronger multi-agent systems (MAS). However, during inference, they require re-executing the MAS to obtain final solutions, which diverges from human cognition that individuals can enhance their reasoning capabilities through interactions with others and resolve questions independently in the future. To investigate whether multi-agent interaction can enhance LLMs' independent problem-solving ability, we introduce ILR, a novel co-learning framework for MAS that integrates two key components: Dynamic Interaction and Perception Calibration. Specifically, Dynamic Interaction first adaptively selects either cooperative or competitive strategies depending on question difficulty and model ability. LLMs then exchange information through Idea3, an innovative interaction paradigm designed to mimic human discussion, before deriving their respective final answers. In Perception Calibration, ILR employs Group Relative Policy Optimization (GRPO) to train LLMs while integrating one LLM's reward distribution characteristics into another's reward function, thereby enhancing the cohesion of multi-agent interactions. We evaluate the effectiveness of ILR across three LLMs from two model families of varying scales on five mathematical, one coding, one general question answering, and one scientific reasoning benchmarks. Experimental results show that ILR consistently outperforms single-agent learning, yielding an improvement of up to 5% over the strongest baseline. We further discover that Idea3 can enhance the robustness of stronger LLMs during multi-agent inference, and dynamic interaction types can boost multi-agent learning compared to pure cooperative or competitive strategies.",
+                    "authors": [
+                      "Hehai Lin",
+                      "Shilei Cao",
+                      "Sudong Wang",
+                      "Haotian Wu",
+                      "Minzhi Li",
+                      "Linyi Yang",
+                      "Juepeng Zheng",
+                      "Chengwei Qin"
+                    ],
+                    "published": "2025-09-30T14:21:31Z",
+                    "updated": "2026-07-06T02:27:57Z",
+                    "url": "http://arxiv.org/abs/2509.26306v5",
+                    "pdf_url": "https://arxiv.org/pdf/2509.26306v5",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.AI",
+                    "categories": [
+                      "cs.AI"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2505.03786v1",
+                    "title": "When Reasoning Beats Scale: A 1.5B Reasoning Model Outranks 13B LLMs as Discriminator",
+                    "summary": "Large Language Models (LLM) with reasoning capabilities offer a promising path for improving candidate evaluation in planning frameworks, but their relative performance against traditional non-reasoning models remains largely underexplored. In this study, we benchmark a distilled 1.5B parameter reasoning model (DeepSeek-R1) against several state-of-the-art non-reasoning LLMs within a generator-discriminator LLM planning framework for the text-to-SQL task. For this, we introduce a novel method for extracting soft scores from the chain-of-thought (CoT) outputs from reasoning that enables fine-grained ranking of candidates. Our central hypothesis is that reasoning models are more effective discriminators than non-reasoning LLMs. Our results show that distilled DeepSeek-R1-1.5B achieves up to $87\\%$ higher F1 and $3.7\\%$ better discrimination accuracy than CodeLlama-7B, as well as $3.7\\%$ higher execution accuracy than CodeLlama-13B, despite having significantly fewer parameters. Furthermore, we find that there is a limit to the logical capabilities of reasoning models, and only providing more context or allowing more compute budget for reasoning is not enough to improve their discrimination performance. Finally, we demonstrate that, unlike non-reasoning LLMs, reasoning models find generation more challenging than discrimination and may underperform as generators compared to smaller non-reasoning LLMs. Our work highlights the potential of reasoning models as discriminators in agentic frameworks, far outweighing their capabilities as generators, offering insights into their optimal role within LLM planning infrastructures.",
+                    "authors": [
+                      "Md Fahim Anjum"
+                    ],
+                    "published": "2025-04-30T17:27:13Z",
+                    "updated": "2025-04-30T17:27:13Z",
+                    "url": "http://arxiv.org/abs/2505.03786v1",
+                    "pdf_url": "https://arxiv.org/pdf/2505.03786v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.LG",
+                    "categories": [
+                      "cs.LG",
+                      "cs.CL"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2406.13803v3",
+                    "title": "LLMs as Models for Analogical Reasoning",
+                    "summary": "Analogical reasoning -- the capacity to identify and map structural relationships between different domains -- is fundamental to human cognition and learning. Recent studies have shown that large language models (LLMs) can sometimes match humans in analogical reasoning tasks, opening the possibility that analogical reasoning might emerge from domain-general processes. However, it is still debated whether these emergent capacities are largely superficial and limited to simple relations seen during training or whether they encompass the flexible representational and mapping capabilities which are the focus of leading cognitive models of analogy. In this study, we introduce novel analogical reasoning tasks that require participants to map between semantically contentful words and sequences of letters and other abstract characters. This task necessitates the ability to flexibly re-represent rich semantic information -- an ability which is known to be central to human analogy but which is thus far not well captured by existing cognitive theories and models. We assess the performance of both human participants and LLMs on tasks focusing on reasoning from semantic structure and semantic content, introducing variations that test the robustness of their analogical inferences. Advanced LLMs match human performance across several conditions, though humans and LLMs respond differently to certain task variations and semantic distractors. Our results thus provide new evidence that LLMs might offer a how-possibly explanation of human analogical reasoning in contexts that are not yet well modeled by existing theories, but that even today's best models are unlikely to yield how-actually explanations.",
+                    "authors": [
+                      "Sam Musker",
+                      "Alex Duchnowski",
+                      "Raphaël Millière",
+                      "Ellie Pavlick"
+                    ],
+                    "published": "2024-06-19T20:07:37Z",
+                    "updated": "2025-11-20T03:50:38Z",
+                    "url": "http://arxiv.org/abs/2406.13803v3",
+                    "pdf_url": "https://arxiv.org/pdf/2406.13803v3",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CL",
+                    "categories": [
+                      "cs.CL"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2604.08140v1",
+                    "title": "Multimodal Reasoning with LLM for Encrypted Traffic Interpretation: A Benchmark",
+                    "summary": "Network traffic, as a key media format, is crucial for ensuring security and communications in modern internet infrastructure. While existing methods offer excellent performance, they face two key bottlenecks: (1) They fail to capture multidimensional semantics beyond unimodal sequence patterns. (2) Their black box property, i.e., providing only category labels, lacks an auditable reasoning process. We identify a key factor that existing network traffic datasets are primarily designed for classification and inherently lack rich semantic annotations, failing to generate human-readable evidence report. To address data scarcity, this paper proposes a Byte-Grounded Traffic Description (BGTD) benchmark for the first time, combining raw bytes with structured expert annotations. BGTD provides necessary behavioral features and verifiable chains of evidence for multimodal reasoning towards explainable encrypted traffic interpretation. Built upon BGTD, this paper proposes an end-to-end traffic-language representation framework (mmTraffic), a multimodal reasoning architecture bridging physical traffic encoding and semantic interpretation. In order to alleviate modality interference and generative hallucinations, mmTraffic adopts a jointly-optimized perception-cognition architecture. By incorporating a perception-centered traffic encoder and a cognition-centered LLM generator, mmTraffic achieves refined traffic interpretation with guaranteed category prediction. Extensive experiments demonstrate that mmTraffic autonomously generates high-fidelity, human-readable, and evidence-grounded traffic interpretation reports, while maintaining highly competitive classification accuracy comparing to specialized unimodal model (e.g., NetMamba). The source code is available at https://github.com/lgzhangzlg/Multimodal-Reasoning-with-LLM-for-Encrypted-Traffic-Interpretation-A-Benchmark",
+                    "authors": [
+                      "Longgang Zhang",
+                      "Xiaowei Fu",
+                      "Fuxiang Huang",
+                      "Lei Zhang"
+                    ],
+                    "published": "2026-04-09T11:56:28Z",
+                    "updated": "2026-04-09T11:56:28Z",
+                    "url": "http://arxiv.org/abs/2604.08140v1",
+                    "pdf_url": "https://arxiv.org/pdf/2604.08140v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CR",
+                    "categories": [
+                      "cs.CR",
+                      "cs.AI",
+                      "cs.MM",
+                      "cs.NI"
+                    ]
+                  }
+                ],
+                "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "format",
+              "args": {
+                "headline": "Các bài báo arXiv liên quan đến LLM Reasoning",
+                "items": [
+                  {
+                    "authors": "Jiaqi Li, Fanghui Song",
+                    "summary": "Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm.",
+                    "title": "Grounding LLM Reasoning under Incomplete Graph Evidence",
+                    "url": "http://arxiv.org/abs/2606.30247v1"
+                  },
+                  {
+                    "authors": "Hehai Lin et al.",
+                    "summary": "Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận.",
+                    "title": "Interactive Learning for LLM Reasoning",
+                    "url": "http://arxiv.org/abs/2509.26306v5"
+                  },
+                  {
+                    "authors": "Md Fahim Anjum",
+                    "summary": "Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM.",
+                    "title": "When Reasoning Beats Scale: A 1.5B Reasoning Model Outranks 13B LLMs as Discriminator",
+                    "url": "http://arxiv.org/abs/2505.03786v1"
+                  },
+                  {
+                    "authors": "Sam Musker, Alex Duchnowski, Raphaël Millière, Ellie Pavlick",
+                    "summary": "Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn.",
+                    "title": "LLMs as Models for Analogical Reasoning",
+                    "url": "http://arxiv.org/abs/2406.13803v3"
+                  },
+                  {
+                    "authors": "Longgang Zhang, Xiaowei Fu, Fuxiang Huang, Lei Zhang",
+                    "summary": "Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích.",
+                    "title": "Multimodal Reasoning with LLM for Encrypted Traffic Interpretation: A Benchmark",
+                    "url": "http://arxiv.org/abs/2604.08140v1"
+                  }
+                ],
+                "template": "bullets"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "format",
+              "args": {
+                "headline": "Các bài báo arXiv liên quan đến LLM Reasoning",
+                "items": [
+                  {
+                    "authors": "Jiaqi Li, Fanghui Song",
+                    "summary": "Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm.",
+                    "title": "Grounding LLM Reasoning under Incomplete Graph Evidence",
+                    "url": "http://arxiv.org/abs/2606.30247v1"
+                  },
+                  {
+                    "authors": "Hehai Lin et al.",
+                    "summary": "Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận.",
+                    "title": "Interactive Learning for LLM Reasoning",
+                    "url": "http://arxiv.org/abs/2509.26306v5"
+                  },
+                  {
+                    "authors": "Md Fahim Anjum",
+                    "summary": "Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM.",
+                    "title": "When Reasoning Beats Scale: A 1.5B Reasoning Model Outranks 13B LLMs as Discriminator",
+                    "url": "http://arxiv.org/abs/2505.03786v1"
+                  },
+                  {
+                    "authors": "Sam Musker, Alex Duchnowski, Raphaël Millière, Ellie Pavlick",
+                    "summary": "Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn.",
+                    "title": "LLMs as Models for Analogical Reasoning",
+                    "url": "http://arxiv.org/abs/2406.13803v3"
+                  },
+                  {
+                    "authors": "Longgang Zhang, Xiaowei Fu, Fuxiang Huang, Lei Zhang",
+                    "summary": "Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích.",
+                    "title": "Multimodal Reasoning with LLM for Encrypted Traffic Interpretation: A Benchmark",
+                    "url": "http://arxiv.org/abs/2604.08140v1"
+                  }
+                ],
+                "template": "bullets"
+              },
+              "result": {
+                "tool": "render_digest",
+                "template": "bullets",
+                "markdown": "- Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm. - [arxiv.org](http://arxiv.org/abs/2606.30247v1)\n- Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận. - [arxiv.org](http://arxiv.org/abs/2509.26306v5)\n- Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM. - [arxiv.org](http://arxiv.org/abs/2505.03786v1)\n- Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn. - [arxiv.org](http://arxiv.org/abs/2406.13803v3)\n- Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích. - [arxiv.org](http://arxiv.org/abs/2604.08140v1)",
+                "item_count": 5
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "- Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm. - [arxiv.org](http://arxiv.org/abs/2606.30247v1)  \n- Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận. - [arxiv.org](http://arxiv.org/abs/2509.26306v5)  \n- Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM. - [arxiv.org](http://arxiv.org/abs/2505.03786v1)  \n- Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn. - [arxiv.org](http://arxiv.org/abs/2406.13803v3)  \n- Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích. - [arxiv.org](http://arxiv.org/abs/2604.08140v1)",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "papers",
+          "args": {
+            "max_results": 5,
+            "query": "LLM reasoning",
+            "sort_by": "relevance"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "LLM reasoning",
+            "api_query": "all:LLM AND all:reasoning",
+            "total_results": 24285,
+            "items": [
+              {
+                "arxiv_id": "2606.30247v1",
+                "title": "Grounding LLM Reasoning under Incomplete Graph Evidence",
+                "summary": "Knowledge graphs can guide large language models (LLMs) reasoning, but the graph seen by a system is usually a retrieved, linked, temporally scoped, and incomplete evidence state rather than a complete account of truth. We develop a theoretical perspective on grounding observable LLM trajectories under such incomplete graph evidence.The evidence state induces entity anchors, typed relation residuals, path energies, and support regions, while the language model supplies a prior over candidate trajectories. We show that, under open-world incompleteness, no hard rule based only on the observed state can both reject every false unsupported trajectory and retain every true-but-unobserved one.We then characterize soft grounding as a KL-regularized deformation of the LLM prior: finite slack preserves support for unsupported but non-contradicted trajectories, whereas hard conditioning appears as an infinite-penalty limit.The framework also yields stability bounds under evidence perturbations and clarifies the constraint regimes appropriate for GraphRAG, KGQA, graph agents, constrained decoding, and faithful generation. The claims are evidence-relative: KG compatibility is treated as declared support, not factual truth.",
+                "authors": [
+                  "Jiaqi Li",
+                  "Fanghui Song"
+                ],
+                "published": "2026-06-29T12:56:21Z",
+                "updated": "2026-06-29T12:56:21Z",
+                "url": "http://arxiv.org/abs/2606.30247v1",
+                "pdf_url": "https://arxiv.org/pdf/2606.30247v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2509.26306v5",
+                "title": "Interactive Learning for LLM Reasoning",
+                "summary": "Existing multi-agent learning approaches have developed interactive training environments to explicitly promote collaboration among multiple Large Language Models (LLMs), thereby constructing stronger multi-agent systems (MAS). However, during inference, they require re-executing the MAS to obtain final solutions, which diverges from human cognition that individuals can enhance their reasoning capabilities through interactions with others and resolve questions independently in the future. To investigate whether multi-agent interaction can enhance LLMs' independent problem-solving ability, we introduce ILR, a novel co-learning framework for MAS that integrates two key components: Dynamic Interaction and Perception Calibration. Specifically, Dynamic Interaction first adaptively selects either cooperative or competitive strategies depending on question difficulty and model ability. LLMs then exchange information through Idea3, an innovative interaction paradigm designed to mimic human discussion, before deriving their respective final answers. In Perception Calibration, ILR employs Group Relative Policy Optimization (GRPO) to train LLMs while integrating one LLM's reward distribution characteristics into another's reward function, thereby enhancing the cohesion of multi-agent interactions. We evaluate the effectiveness of ILR across three LLMs from two model families of varying scales on five mathematical, one coding, one general question answering, and one scientific reasoning benchmarks. Experimental results show that ILR consistently outperforms single-agent learning, yielding an improvement of up to 5% over the strongest baseline. We further discover that Idea3 can enhance the robustness of stronger LLMs during multi-agent inference, and dynamic interaction types can boost multi-agent learning compared to pure cooperative or competitive strategies.",
+                "authors": [
+                  "Hehai Lin",
+                  "Shilei Cao",
+                  "Sudong Wang",
+                  "Haotian Wu",
+                  "Minzhi Li",
+                  "Linyi Yang",
+                  "Juepeng Zheng",
+                  "Chengwei Qin"
+                ],
+                "published": "2025-09-30T14:21:31Z",
+                "updated": "2026-07-06T02:27:57Z",
+                "url": "http://arxiv.org/abs/2509.26306v5",
+                "pdf_url": "https://arxiv.org/pdf/2509.26306v5",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2505.03786v1",
+                "title": "When Reasoning Beats Scale: A 1.5B Reasoning Model Outranks 13B LLMs as Discriminator",
+                "summary": "Large Language Models (LLM) with reasoning capabilities offer a promising path for improving candidate evaluation in planning frameworks, but their relative performance against traditional non-reasoning models remains largely underexplored. In this study, we benchmark a distilled 1.5B parameter reasoning model (DeepSeek-R1) against several state-of-the-art non-reasoning LLMs within a generator-discriminator LLM planning framework for the text-to-SQL task. For this, we introduce a novel method for extracting soft scores from the chain-of-thought (CoT) outputs from reasoning that enables fine-grained ranking of candidates. Our central hypothesis is that reasoning models are more effective discriminators than non-reasoning LLMs. Our results show that distilled DeepSeek-R1-1.5B achieves up to $87\\%$ higher F1 and $3.7\\%$ better discrimination accuracy than CodeLlama-7B, as well as $3.7\\%$ higher execution accuracy than CodeLlama-13B, despite having significantly fewer parameters. Furthermore, we find that there is a limit to the logical capabilities of reasoning models, and only providing more context or allowing more compute budget for reasoning is not enough to improve their discrimination performance. Finally, we demonstrate that, unlike non-reasoning LLMs, reasoning models find generation more challenging than discrimination and may underperform as generators compared to smaller non-reasoning LLMs. Our work highlights the potential of reasoning models as discriminators in agentic frameworks, far outweighing their capabilities as generators, offering insights into their optimal role within LLM planning infrastructures.",
+                "authors": [
+                  "Md Fahim Anjum"
+                ],
+                "published": "2025-04-30T17:27:13Z",
+                "updated": "2025-04-30T17:27:13Z",
+                "url": "http://arxiv.org/abs/2505.03786v1",
+                "pdf_url": "https://arxiv.org/pdf/2505.03786v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2406.13803v3",
+                "title": "LLMs as Models for Analogical Reasoning",
+                "summary": "Analogical reasoning -- the capacity to identify and map structural relationships between different domains -- is fundamental to human cognition and learning. Recent studies have shown that large language models (LLMs) can sometimes match humans in analogical reasoning tasks, opening the possibility that analogical reasoning might emerge from domain-general processes. However, it is still debated whether these emergent capacities are largely superficial and limited to simple relations seen during training or whether they encompass the flexible representational and mapping capabilities which are the focus of leading cognitive models of analogy. In this study, we introduce novel analogical reasoning tasks that require participants to map between semantically contentful words and sequences of letters and other abstract characters. This task necessitates the ability to flexibly re-represent rich semantic information -- an ability which is known to be central to human analogy but which is thus far not well captured by existing cognitive theories and models. We assess the performance of both human participants and LLMs on tasks focusing on reasoning from semantic structure and semantic content, introducing variations that test the robustness of their analogical inferences. Advanced LLMs match human performance across several conditions, though humans and LLMs respond differently to certain task variations and semantic distractors. Our results thus provide new evidence that LLMs might offer a how-possibly explanation of human analogical reasoning in contexts that are not yet well modeled by existing theories, but that even today's best models are unlikely to yield how-actually explanations.",
+                "authors": [
+                  "Sam Musker",
+                  "Alex Duchnowski",
+                  "Raphaël Millière",
+                  "Ellie Pavlick"
+                ],
+                "published": "2024-06-19T20:07:37Z",
+                "updated": "2025-11-20T03:50:38Z",
+                "url": "http://arxiv.org/abs/2406.13803v3",
+                "pdf_url": "https://arxiv.org/pdf/2406.13803v3",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2604.08140v1",
+                "title": "Multimodal Reasoning with LLM for Encrypted Traffic Interpretation: A Benchmark",
+                "summary": "Network traffic, as a key media format, is crucial for ensuring security and communications in modern internet infrastructure. While existing methods offer excellent performance, they face two key bottlenecks: (1) They fail to capture multidimensional semantics beyond unimodal sequence patterns. (2) Their black box property, i.e., providing only category labels, lacks an auditable reasoning process. We identify a key factor that existing network traffic datasets are primarily designed for classification and inherently lack rich semantic annotations, failing to generate human-readable evidence report. To address data scarcity, this paper proposes a Byte-Grounded Traffic Description (BGTD) benchmark for the first time, combining raw bytes with structured expert annotations. BGTD provides necessary behavioral features and verifiable chains of evidence for multimodal reasoning towards explainable encrypted traffic interpretation. Built upon BGTD, this paper proposes an end-to-end traffic-language representation framework (mmTraffic), a multimodal reasoning architecture bridging physical traffic encoding and semantic interpretation. In order to alleviate modality interference and generative hallucinations, mmTraffic adopts a jointly-optimized perception-cognition architecture. By incorporating a perception-centered traffic encoder and a cognition-centered LLM generator, mmTraffic achieves refined traffic interpretation with guaranteed category prediction. Extensive experiments demonstrate that mmTraffic autonomously generates high-fidelity, human-readable, and evidence-grounded traffic interpretation reports, while maintaining highly competitive classification accuracy comparing to specialized unimodal model (e.g., NetMamba). The source code is available at https://github.com/lgzhangzlg/Multimodal-Reasoning-with-LLM-for-Encrypted-Traffic-Interpretation-A-Benchmark",
+                "authors": [
+                  "Longgang Zhang",
+                  "Xiaowei Fu",
+                  "Fuxiang Huang",
+                  "Lei Zhang"
+                ],
+                "published": "2026-04-09T11:56:28Z",
+                "updated": "2026-04-09T11:56:28Z",
+                "url": "http://arxiv.org/abs/2604.08140v1",
+                "pdf_url": "https://arxiv.org/pdf/2604.08140v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CR",
+                "categories": [
+                  "cs.CR",
+                  "cs.AI",
+                  "cs.MM",
+                  "cs.NI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        },
+        {
+          "tool": "format",
+          "args": {
+            "headline": "Các bài báo arXiv liên quan đến LLM Reasoning",
+            "items": [
+              {
+                "authors": "Jiaqi Li, Fanghui Song",
+                "summary": "Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm.",
+                "title": "Grounding LLM Reasoning under Incomplete Graph Evidence",
+                "url": "http://arxiv.org/abs/2606.30247v1"
+              },
+              {
+                "authors": "Hehai Lin et al.",
+                "summary": "Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận.",
+                "title": "Interactive Learning for LLM Reasoning",
+                "url": "http://arxiv.org/abs/2509.26306v5"
+              },
+              {
+                "authors": "Md Fahim Anjum",
+                "summary": "Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM.",
+                "title": "When Reasoning Beats Scale: A 1.5B Reasoning Model Outranks 13B LLMs as Discriminator",
+                "url": "http://arxiv.org/abs/2505.03786v1"
+              },
+              {
+                "authors": "Sam Musker, Alex Duchnowski, Raphaël Millière, Ellie Pavlick",
+                "summary": "Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn.",
+                "title": "LLMs as Models for Analogical Reasoning",
+                "url": "http://arxiv.org/abs/2406.13803v3"
+              },
+              {
+                "authors": "Longgang Zhang, Xiaowei Fu, Fuxiang Huang, Lei Zhang",
+                "summary": "Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích.",
+                "title": "Multimodal Reasoning with LLM for Encrypted Traffic Interpretation: A Benchmark",
+                "url": "http://arxiv.org/abs/2604.08140v1"
+              }
+            ],
+            "template": "bullets"
+          },
+          "result": {
+            "tool": "render_digest",
+            "template": "bullets",
+            "markdown": "- Khảo sát cách LLMs dựa trên đồ thị tri thức không đầy đủ để thực hiện suy luận, đề xuất khung lý thuyết và các ràng buộc mềm. - [arxiv.org](http://arxiv.org/abs/2606.30247v1)\n- Khung học tương tác đa‑agent (ILR) giúp LLMs cải thiện khả năng giải quyết độc lập thông qua tương tác động và điều chỉnh cảm nhận. - [arxiv.org](http://arxiv.org/abs/2509.26306v5)\n- Mô hình suy luận 1.5B (DeepSeek‑R1) vượt trội hơn các LLM lớn hơn trong vai trò phân biệt trong khung lập kế hoạch LLM. - [arxiv.org](http://arxiv.org/abs/2505.03786v1)\n- Đánh giá khả năng suy luận tương tự của LLMs trên các nhiệm vụ analogies mới, so sánh với con người và thảo luận giới hạn. - [arxiv.org](http://arxiv.org/abs/2406.13803v3)\n- Benchmark và kiến trúc mmTraffic cho phép LLM thực hiện suy luận đa mô hình trên dữ liệu mạng mã hoá, cung cấp báo cáo giải thích. - [arxiv.org](http://arxiv.org/abs/2604.08140v1)",
+            "item_count": 5
+          }
+        }
+      ],
+      "ended_at": "2026-11-10T18:21:08"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-11-10T18:21:08",
+      "user": "Gửi tóm tắt này lên kênh Telegram giúp tôi",
+      "status": "waiting_for_user",
+      "assistant_text": "Bạn có muốn gửi tóm tắt các phát hiện nghiên cứu lên kênh Telegram ngay bây giờ không?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "clarify",
+              "args": {
+                "question": "Bạn có muốn gửi tóm tắt các phát hiện nghiên cứu lên kênh Telegram ngay bây giờ không?",
+                "response_type": "yes_no"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "clarify",
+              "args": {
+                "question": "Bạn có muốn gửi tóm tắt các phát hiện nghiên cứu lên kênh Telegram ngay bây giờ không?",
+                "response_type": "yes_no"
+              },
+              "result": {
+                "tool": "ask_user",
+                "question": "Bạn có muốn gửi tóm tắt các phát hiện nghiên cứu lên kênh Telegram ngay bây giờ không?",
+                "response_type": "yes_no",
+                "options": [],
+                "awaiting_user": true
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có muốn gửi tóm tắt các phát hiện nghiên cứu lên kênh Telegram ngay bây giờ không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có muốn gửi tóm tắt các phát hiện nghiên cứu lên kênh Telegram ngay bây giờ không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ],
+      "ended_at": "2026-11-10T18:21:11"
+    },
+    {
+      "turn_index": 4,
+      "started_at": "2026-11-10T18:21:11",
+      "user": "Tôi đồng ý xác nhận gửi đi ngay",
+      "status": "answered",
+      "assistant_text": "Rất tiếc, việc gửi tin nhắn tới Telegram đã không thành công vì hệ thống hiện không có các biến môi trường cần thiết (`TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID`).  \n\nNếu bạn vẫn muốn chia sẻ tóm tắt, tôi có thể:\n\n1. **Cung cấp lại nội dung dưới dạng văn bản để bạn sao chép và gửi thủ công**, hoặc  \n2. **Định dạng lại nội dung thành bản tin (ví dụ: dạng bullet hoặc đoạn ngắn gọn) để bạn dễ dàng dán vào Telegram**.\n\nBạn muốn tôi thực hiện cách nào? (Vui lòng cho biết để tôi chuẩn bị nội dung cho bạn.)",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "send",
+              "args": {
+                "confirmed": true,
+                "text": "Tóm tắt các phát hiện chính:\n- Mô hình suy luận mới được đề xuất trong nghiên cứu đạt hiệu suất cao hơn 20 % so với các mô hình cơ sở hiện có trên các bài toán toán học."
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "send",
+              "args": {
+                "confirmed": true,
+                "text": "Tóm tắt các phát hiện chính:\n- Mô hình suy luận mới được đề xuất trong nghiên cứu đạt hiệu suất cao hơn 20 % so với các mô hình cơ sở hiện có trên các bài toán toán học."
+              },
+              "result": {
+                "tool": "send_telegram",
+                "error": "RuntimeError",
+                "message": "Missing TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env var"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Rất tiếc, việc gửi tin nhắn tới Telegram đã không thành công vì hệ thống hiện không có các biến môi trường cần thiết (`TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID`).  \n\nNếu bạn vẫn muốn chia sẻ tóm tắt, tôi có thể:\n\n1. **Cung cấp lại nội dung dưới dạng văn bản để bạn sao chép và gửi thủ công**, hoặc  \n2. **Định dạng lại nội dung thành bản tin (ví dụ: dạng bullet hoặc đoạn ngắn gọn) để bạn dễ dàng dán vào Telegram**.\n\nBạn muốn tôi thực hiện cách nào? (Vui lòng cho biết để tôi chuẩn bị nội dung cho bạn.)",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "send",
+          "args": {
+            "confirmed": true,
+            "text": "Tóm tắt các phát hiện chính:\n- Mô hình suy luận mới được đề xuất trong nghiên cứu đạt hiệu suất cao hơn 20 % so với các mô hình cơ sở hiện có trên các bài toán toán học."
+          },
+          "result": {
+            "tool": "send_telegram",
+            "error": "RuntimeError",
+            "message": "Missing TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env var"
+          }
+        }
+      ],
+      "ended_at": "2026-11-10T18:21:25"
+    }
+  ]
+}
