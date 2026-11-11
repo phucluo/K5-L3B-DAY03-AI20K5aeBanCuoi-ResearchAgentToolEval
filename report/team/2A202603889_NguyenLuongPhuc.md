@@ -5,7 +5,6 @@
 - Họ tên: Nguyễn Lương Phúc
 - MSSV: 2A202603889
 - Email: 26ai.phucnl@vinuni.edu.vn
-- GitHub: [phucluo](https://github.com/phucluo)
 - Nhóm: AI20K5aeBanCuoi
 - Lớp: L3B
 - Nhánh nộp bài: `main`
