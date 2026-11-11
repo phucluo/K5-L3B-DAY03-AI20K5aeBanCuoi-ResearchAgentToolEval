@@ -17,17 +17,7 @@
 |   4 | Nguyễn Minh Thành | 2A202603884 | thanhhy98@gmail.com | thanhhy98 | Evaluation, Q&A (v7)|
 |   5 | Nguyễn Thế Bảo | 2A202603825 |       | NTBao | Phụ trách xây dựng Streamlit UI, cấu hình `requirements.txt`|
 
-## Cá nhân
-
-Mỗi thành viên đồng thời tạo một báo cáo riêng trong `report/` theo dạng:
-
-```text
-report/team/MSSV_HoTen.md
-```
-
-Ví dụ: `report/team/20241234_NguyenVanAn.md`.
-
-Sao chép mục dưới đây cho từng thành viên.
+# Cá nhân
 
 ## NguyenLuongPhuc-2A202603889
 
@@ -51,6 +41,23 @@ Sao chép mục dưới đây cho từng thành viên.
 - Cập nhật vai trò và phân công. [Commit 012c2a9](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/012c2a99a7a4ad9754eddb18a49e3511e3a7ff7f), [commit 96810d7](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/96810d777b6193f95bc547aab2115bd0d8936499).
 - Chi tiết đối chiếu, Reflection và checklist. [Báo cáo cá nhân](report/team/2A202603889_NguyenLuongPhuc.md).
 - Dữ liệu thực nghiệm của nhóm. [Version log](starter_v0/artifacts/version_log.csv), [báo cáo nhóm](report/team/group_report.md).
+
+## NguyenAnhQuan-2A202603892
+
+### Phần việc phụ trách
+
+- Tích hợp Groq, phát triển tool `summarize_paper` và unit test (CP3), xây dựng bộ eval nhóm (CP4).
+
+### Đóng góp cụ thể
+
+- Tích hợp `GroqProvider` với model `openai/gpt-oss-120b` cho luồng eval và chat.
+- Phát triển, đăng ký và viết unit test cho `summarize_paper`. Báo cáo nhóm ghi nhận `84 passed, 0 failed, 0 skipped`.
+- Xây dựng bộ eval nhóm gồm 10 case, trong đó có các ca kiểm tra tool mới. Ghi kết quả base v0–v3 vào version log và lưu run group đạt 10/10.
+
+### Bằng chứng
+
+- [Commit 05048af](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/05048aff52babaced00a668d394bf19bf1ea803a), [mã nguồn tool](starter_v0/tools/summarize_paper/tool.py), [unit tests](starter_v0/tests/test_tools_todo.py).
+- [Version log](starter_v0/artifacts/version_log.csv), [run group 10/10](starter_v0/runs/v3_B_group_groq_20261110T181849672426.json), [báo cáo cá nhân](report/team/2A202603892_NguyenAnhQuan.md).
 
 ## LeNgocKhanh-2A202603804
 
@@ -88,15 +95,18 @@ Sao chép mục dưới đây cho từng thành viên.
 - Run base và hash/version log: [`starter_v0/artifacts/version_log.csv`](starter_v0/artifacts/version_log.csv); QA tests: [`starter_v0/tests/test_tool_contract.py`](starter_v0/tests/test_tool_contract.py), [`starter_v0/tests/test_tools_todo.py`](starter_v0/tests/test_tools_todo.py)
 - Commit `bdb2f8c`, `e9e45a6` ; nhánh [`nguyen-minh-thanh`](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/tree/nguyen-minh-thanh)
 
-
-## HoVaTen-MSSV
+## NguyenTheBao-2A202603825
 
 ### Phần việc phụ trách
 
--
+- Phụ trách giao diện Streamlit và chuẩn bị demo hội thoại cho Research Agent (CP5).
 
 ### Đóng góp cụ thể
 
--
+- Rà soát luồng demo trên giao diện chat, gồm chọn provider/model, câu hỏi mẫu, hiển thị chi tiết lượt gọi tool và ghi transcript theo phiên.
+- Kiểm tra ứng dụng khởi động bằng `streamlit run app.py`. Báo cáo cá nhân ghi nhận health check trên máy local trả về `HTTP 200`.
 
 ### Bằng chứng
+
+- [Giao diện Streamlit](starter_v0/app.py), [vòng lặp chat và ghi transcript](starter_v0/chat.py).
+- [Báo cáo cá nhân và kết quả kiểm tra khởi chạy](report/team/2A202603825_NguyenTheBao.md), [commit cập nhật báo cáo 8d8bd98](https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval/commit/8d8bd9813f3b76fe3ce693e0372494c1b6cdbb3f).
