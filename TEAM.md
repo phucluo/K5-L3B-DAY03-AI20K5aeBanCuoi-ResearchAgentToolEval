@@ -2,17 +2,20 @@
 
 ## Thông tin nhóm
 
-- Tên nhóm:
-- Lớp: L3A / L3B
-- Repo nhóm: `K5-L3A-DAY03-TenNhom-ResearchAgentToolEval` hoặc `K5-L3B-DAY03-TenNhom-ResearchAgentToolEval` (xem [SUBMISSION.md](SUBMISSION.md))
-- URL repo, nhánh nộp, commit chốt:
+- Tên nhóm: AI20K5aeBanCuoi
+- Lớp: L3B
+- Repo nhóm: K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval
+- URL repo, nhánh nộp, commit chốt: https://github.com/phucluo/K5-L3B-DAY03-AI20K5aeBanCuoi-ResearchAgentToolEval
 
 ## Thành viên
 
 | STT | Họ tên | MSSV | Email | GitHub | Vai trò |
 | --: | ------ | ---- | ----- | ------ | ------- |
-|   1 |        |      |       |        |         |
-|   2 |        |      |       |        |         |
+|   1 | Nguyễn Lương Phúc | 2A202603889 | 26ai.phucnl@vinuni.edu.vn | phucluo | Team lead|
+|   2 | Nguyễn Anh Quân | 2A202603892 |       |        |         |
+|   3 |        |      |       |        |         |
+|   4 |        |      |       |        |         |
+|   5 |        |      |       |        |         |
 
 ## Cá nhân
 
